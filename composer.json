@@ -5,6 +5,7 @@
             "name": "liujingyu"
         }
     ],
+    "license": "MIT",
     "autoload": {
         "psr-4": {
             "Superman2014\\Sms\\": "src/"
@@ -18,5 +19,10 @@
         "ext-openssl": "*",
         "illuminate/support": "~5.3",
         "php": ">=5.6.0"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master":"1.0-dev"
+        }
     }
 }
