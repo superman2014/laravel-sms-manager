@@ -23,13 +23,13 @@ class AliyunSmsProvider extends AbstractProvider implements ProviderContract
         $this->mobile = (array)$mobile;
 
 
-        if (! isset(config('sms.aliyunsms.template_codes')[$templateCode])) {
+        if (! isset($this->config['template_codes'][$templateCode])) {
             throw new InvalidArgumentException(sprintf('The %s is invalid.', $templateCode));
         }
 
         $this->templateCode = $templateCode;
 
-        $templateScope = config('sms.aliyunsms.template_codes')[$templateCode];
+        $templateScope = $this->config['template_codes'][$templateCode];
 
         $originScope = $templateScope['scopes'];
         sort($templateScope['scopes'], SORT_STRING);
@@ -73,9 +73,9 @@ class AliyunSmsProvider extends AbstractProvider implements ProviderContract
         return $smsSender->send(
             implode(',', $this->mobile),
             json_encode($this->paramString),
-            $this->credentials['client_id'],
-            $this->credentials['client_secret'],
-            $this->credentials['sign_name'],
+            $this->config['client_id'],
+            $this->config['client_secret'],
+            $this->config['sign_name'],
             $this->templateCode
         );
     }

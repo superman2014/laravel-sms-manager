@@ -35,14 +35,17 @@ return [
 
     'default' => 'aliyunsms',
 
-    'aliyunsms' => [
-        'client_id' => env('ALIYUN_SMS_CLIENT_ID', null),
-        'client_secret' => env('ALIYUN_SMS_CLIENT_SECRET', null),
-        'sign_name' => env('ALIYUN_SMS_SIGN_NAME', null),
-        'template_codes' => [
-            'SMS_1234' => [
-                'name' => '测试验证码',
-                'scopes' => ['captcha'],
+    'sms' => [
+        'aliyunsms' => [
+            'driver' => 'aliyunsms',
+            'client_id' => env('ALIYUN_SMS_CLIENT_ID', null),
+            'client_secret' => env('ALIYUN_SMS_CLIENT_SECRET', null),
+            'sign_name' => env('ALIYUN_SMS_SIGN_NAME', null),
+            'template_codes' => [
+                'SMS_1234' => [
+                    'name' => '测试验证码',
+                    'scopes' => ['captcha'],
+                ],
             ],
         ],
     ],
@@ -56,34 +59,23 @@ return [
 Step4: 代码中使用
 
 ```
-<?php
+php artisan tinker
+Psy Shell v0.7.2 (PHP 7.0.15 — cli) by Justin Hileman
 
-namespace App\TestService;
+=> null
+>>> $paramString = ['captcha' => 1234];
+=> [
+     "captcha" => 1234,
+   ]
+>>> $a = Sms::driver()->prepare('18512345678', $paramString, 'SMS_1234')->send();
+>>> $a = Sms::driver('aliyunsms')->prepare('18512345678', $paramString, 'SMS_1234')->send();
 
-use Sms;
-
-class Test
-{
-
-    public function main()
-    {
-        $moblie = '18512345678';
-        $paramString = [
-            'code' => '1234',
-        ];
-        $templateCode = 'SMS_1234';
-
-        $requestId = Sms::driver('aliyunsms')
-            ->prepare($moblie, $paramString, $templateCode)
-            ->send();
-    }
-}
 ```
 
 **Note**: superman2014/sms还不是很完善
 
 - [ ] add event
-- [ ] add default
+- [x] add default
 - [ ] sms frequency limit
 - [ ] and so on
 

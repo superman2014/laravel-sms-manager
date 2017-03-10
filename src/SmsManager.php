@@ -10,54 +10,105 @@ class SmsManager extends Manager implements Contracts\Factory
     /**
      * Get a driver instance.
      *
-     * @param  string  $driver
+     * @param  string|null $driver
      * @return mixed
      */
-    public function with($driver)
+    public function driver($driver = null)
     {
-        return $this->driver($driver);
+        return $this->sms($driver);
     }
+
+    /**
+     * Get a sms provider instance.
+     *
+     * @param  string|null $driver
+     * @return mixed
+     */
+    public function sms($name = null)
+	{
+		$name = $name ?: $this->getDefaultDriver();
+
+		return $this->sms[$name] = $this->get($name);
+	}
 
     /**
      * Create an instance of the specified driver.
      *
+     * @param array $config
      * @return \Superman2014\Sms\Sms\AbstractProvider
      */
-    protected function createAliyunsmsDriver()
+    protected function createAliyunsmsDriver($config)
     {
-        $config = $this->app['config']['sms.aliyunsms'];
+        $provider = 'Superman2014\Sms\Sms\AliyunSmsProvider';
 
-        return $this->buildProvider(
-            'Superman2014\Sms\Sms\AliyunSmsProvider', $config
-        );
+		return new $provider($config);
     }
 
     /**
-     * Build an Sms provider instance.
+     * Attempt to get the sms provider instance.
      *
-     * @param  string  $provider
-     * @param  array  $config
+     * @param  string  $name
      * @return \Superman2014\Sms\Sms\AbstractProvider
      */
-    public function buildProvider($provider, $config)
+    protected function get($name)
     {
-        return new $provider(
-            $config['client_id'],
-            $config['client_secret'],
-            $config['sign_name']
-        );
+        return isset($this->sms[$name]) ? $this->sms[$name] : $this->resolve($name);
+    }
+
+    /**
+     * Resolve the given sms.
+     *
+     * @param  string  $name
+     *
+     * @return \Superman2014\Sms\Sms\AbstractProvider
+
+     * @throws \InvalidArgumentException
+     */
+    protected function resolve($name)
+    {
+        $config = $this->getConfig($name);
+
+        if (is_null($config)) {
+            throw new InvalidArgumentException("Sms provider [{$name}] is not defined.");
+        }
+
+        if (isset($this->customCreators[$config['driver']])) {
+            return $this->callCustomCreator($config);
+        } else {
+            $driverMethod = 'create'.ucfirst($config['driver']).'Driver';
+
+            if (method_exists($this, $driverMethod)) {
+                return $this->{$driverMethod}($config);
+            } else {
+                throw new InvalidArgumentException("Driver [{$config['driver']}] is not supported.");
+            }
+        }
+    }
+
+    /**
+     * Get the sms configuration.
+     *
+     * @param  string  $name
+     * @return array
+     */
+    protected function getConfig($name)
+    {
+        return $this->app['config']["sms.sms.{$name}"];
     }
 
     /**
      * Get the default driver name.
      *
-     * @throws \InvalidArgumentException
-     *
      * @return string
      */
     public function getDefaultDriver()
     {
-        throw new InvalidArgumentException('No Sms driver was specified.');
+        return $this->app['config']['sms.default'];
+    }
+
+    public function setDefaultDriver($name)
+    {
+        $this->app['config']['sms.default'] = $name;
     }
 }
 

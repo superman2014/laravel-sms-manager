@@ -8,21 +8,17 @@ abstract class AbstractProvider
 {
 
     public static $scopes = ['prepare'];
-    protected $credentials;
+    protected $config;
 
     /**
      * Create a new provider instance.
      *
-     * @param  string  $clientId
-     * @param  string  $clientSecret
-     * @param  string  $signName
+     * @param array $config
      * @return void
      */
-    public function __construct($clientId, $clientSecret, $signName)
+    public function __construct($config)
     {
-        $this->credentials['client_id'] = $clientId;
-        $this->credentials['client_secret'] = $clientSecret;
-        $this->credentials['sign_name'] = $signName;
+        $this->config = $config;
     }
 
     public function __call($method, $params)
