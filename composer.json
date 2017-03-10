@@ -1,0 +1,22 @@
+{
+    "authors": [
+        {
+            "email": "jingyu525@gmail.com",
+            "name": "liujingyu"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Superman2014\\Sms\\": "src/"
+        }
+    },
+    "description": "provider sms send manager,support aliyun sms and so far.",
+    "minimum-stability": "dev",
+    "name": "superman2014/laravel-sms-manager",
+    "require": {
+        "superman2014/aliyun-php-sdk-sms": "dev-master",
+        "ext-openssl": "*",
+        "illuminate/support": "~5.3",
+        "php": ">=5.6.0"
+    }
+}
