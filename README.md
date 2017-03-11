@@ -62,6 +62,7 @@ Step4: 代码中使用
 php artisan tinker
 Psy Shell v0.7.2 (PHP 7.0.15 — cli) by Justin Hileman
 
+>>> use Sms;
 => null
 >>> $paramString = ['captcha' => 1234];
 => [
@@ -75,6 +76,7 @@ Psy Shell v0.7.2 (PHP 7.0.15 — cli) by Justin Hileman
 **Note**: superman2014/sms还不是很完善
 
 - [ ] add event
+- [ ] support queue
 - [x] add default
 - [ ] sms frequency limit
 - [ ] and so on
