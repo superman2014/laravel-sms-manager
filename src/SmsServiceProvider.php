@@ -15,14 +15,12 @@ class SmsServiceProvider extends ServiceProvider
 
     /**
      * Register the service provider.
-     *
-     * @return void
      */
     public function register()
     {
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__. '/../config/sms.php' => config_path('sms.php'),
+                __DIR__.'/../config/sms.php' => config_path('sms.php'),
             ], 'config');
         }
 
@@ -41,4 +39,3 @@ class SmsServiceProvider extends ServiceProvider
         return ['Superman2014\Sms\Contracts\Factory'];
     }
 }
-

@@ -19,4 +19,3 @@ class Sms extends Facade
         return 'Superman2014\Sms\Contracts\Factory';
     }
 }
-

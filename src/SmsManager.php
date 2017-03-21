@@ -10,7 +10,8 @@ class SmsManager extends Manager implements Contracts\Factory
     /**
      * Get a driver instance.
      *
-     * @param  string|null $driver
+     * @param string|null $driver
+     *
      * @return mixed
      */
     public function driver($driver = null)
@@ -21,33 +22,36 @@ class SmsManager extends Manager implements Contracts\Factory
     /**
      * Get a sms provider instance.
      *
-     * @param  string|null $driver
+     * @param string|null $driver
+     *
      * @return mixed
      */
     public function sms($name = null)
-	{
-		$name = $name ?: $this->getDefaultDriver();
+    {
+        $name = $name ?: $this->getDefaultDriver();
 
-		return $this->sms[$name] = $this->get($name);
-	}
+        return $this->sms[$name] = $this->get($name);
+    }
 
     /**
      * Create an instance of the specified driver.
      *
      * @param array $config
+     *
      * @return \Superman2014\Sms\Sms\AbstractProvider
      */
     protected function createAliyunsmsDriver($config)
     {
         $provider = 'Superman2014\Sms\Sms\AliyunSmsProvider';
 
-		return new $provider($config);
+        return new $provider($config);
     }
 
     /**
      * Attempt to get the sms provider instance.
      *
-     * @param  string  $name
+     * @param string $name
+     *
      * @return \Superman2014\Sms\Sms\AbstractProvider
      */
     protected function get($name)
@@ -58,10 +62,9 @@ class SmsManager extends Manager implements Contracts\Factory
     /**
      * Resolve the given sms.
      *
-     * @param  string  $name
+     * @param string $name
      *
      * @return \Superman2014\Sms\Sms\AbstractProvider
-
      * @throws \InvalidArgumentException
      */
     protected function resolve($name)
@@ -88,7 +91,8 @@ class SmsManager extends Manager implements Contracts\Factory
     /**
      * Get the sms configuration.
      *
-     * @param  string  $name
+     * @param string $name
+     *
      * @return array
      */
     protected function getConfig($name)
@@ -111,4 +115,3 @@ class SmsManager extends Manager implements Contracts\Factory
         $this->app['config']['sms.default'] = $name;
     }
 }
-

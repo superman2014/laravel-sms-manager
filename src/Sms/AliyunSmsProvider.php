@@ -8,7 +8,6 @@ use InvalidArgumentException;
 
 class AliyunSmsProvider extends AbstractProvider implements ProviderContract
 {
-
     public static $templateVariableMaxLength = 15;
 
     /*
@@ -20,10 +19,9 @@ class AliyunSmsProvider extends AbstractProvider implements ProviderContract
      */
     public function prepare($mobile, array $paramString, $templateCode)
     {
-        $this->mobile = (array)$mobile;
+        $this->mobile = (array) $mobile;
 
-
-        if (! isset($this->config['template_codes'][$templateCode])) {
+        if (!isset($this->config['template_codes'][$templateCode])) {
             throw new InvalidArgumentException(sprintf('The %s is invalid.', $templateCode));
         }
 
@@ -69,7 +67,8 @@ class AliyunSmsProvider extends AbstractProvider implements ProviderContract
      */
     public function send()
     {
-        $smsSender = new SmsSender;
+        $smsSender = new SmsSender();
+
         return $smsSender->send(
             implode(',', $this->mobile),
             json_encode($this->paramString),
@@ -79,6 +78,4 @@ class AliyunSmsProvider extends AbstractProvider implements ProviderContract
             $this->templateCode
         );
     }
-
 }
-
