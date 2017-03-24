@@ -17,7 +17,7 @@
     "require": {
         "superman2014/aliyun-php-sdk-sms": "dev-master",
         "ext-openssl": "*",
-        "illuminate/support": "5.3.*",
+        "illuminate/support": "5.2.* || 5.3.* || 5.4.*",
         "php": ">=5.6.0"
     },
     "extra": {
