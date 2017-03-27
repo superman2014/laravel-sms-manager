@@ -1,7 +1,7 @@
 # SMS
 
 
-Step1: 安装, `composer require "superman2014/sms:dev-master"`
+Step1: 安装, `composer require "superman2014/sms:1.0.x@dev"`
 
 Step2: 注册 `Superman2014\Sms\SmsServiceProvider` 到`config/app.php` 配置文件:
 
