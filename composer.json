@@ -13,6 +13,7 @@
     },
     "description": "provider sms send manager,support aliyun sms and so far.",
     "name": "superman2014/laravel-sms-manager",
+    "minimum-stability":"dev",
     "require": {
         "superman2014/aliyun-php-sdk-sms": "1.0.x@dev",
         "ext-openssl": "*",
