@@ -1,5 +1,6 @@
 # SMS
 
+Support Laravel and Lumen.
 
 Step1: 安装, `composer require "superman2014/laravel-sms-manager:1.0.x@dev"`
 
@@ -11,6 +12,13 @@ Step2: 注册 `Superman2014\Sms\SmsServiceProvider` 到`config/app.php` 配置�
 
     Superman2014\Sms\SmsServiceProvider::class,
 ],
+
+```
+
+or  bootstrap/app.php
+
+```
+$app->register(Superman2014\Sms\SmsServiceProvider::class);
 
 ```
 
@@ -78,7 +86,7 @@ Psy Shell v0.7.2 (PHP 7.0.15 — cli) by Justin Hileman
 - [ ] add event
 - [ ] support queue
 - [x] add default
-- [ ] sms frequency limit
+- [x] sms frequency limit [captcha-repository](https://github.com/superman2014/captcha-repository)
 - [ ] and so on
 
 
