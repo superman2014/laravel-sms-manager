@@ -119,20 +119,38 @@ class AliyunSmsProvider extends AbstractProvider implements ProviderContract
     public function send()
     {
         $smsSender = new SmsSender();
+        $signName = $this->config['sign_name'];
+        if (! empty($this->config['template_codes'][$this->templateCode]['sign_name_key'])) {
+            $signNameKey = $this->config['template_codes'][$this->templateCode]['sign_name_key'];
+            if (empty($this->config[$signNameKey])) {
+                throw new InvalidArgumentException(sprintf('The %s sign name key is not exists'));
+            }
+            $signName = $this->config[$signNameKey];
+        }
 
         return $smsSender->send(
             implode(',', $this->mobile),
             json_encode($this->paramString),
             $this->config['client_id'],
             $this->config['client_secret'],
-            $this->config['sign_name'],
+            $signName,
             $this->templateCode
         );
     }
 
+
     public function sendV20170606()
     {
         $smsSender = new SmsSenderV20170606();
+
+        $signName = $this->config['sign_name'];
+        if (! empty($this->config['template_codes'][$this->templateCode]['sign_name_key'])) {
+            $signNameKey = $this->config['template_codes'][$this->templateCode]['sign_name_key'];
+            if (empty($this->config[$signNameKey])) {
+                throw new InvalidArgumentException(sprintf('The %s sign name key is not exists'));
+            }
+            $signName = $this->config[$signNameKey];
+        }
 
         return $smsSender->send(
             $this->mobile,

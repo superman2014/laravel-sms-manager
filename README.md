@@ -79,6 +79,10 @@ Psy Shell v0.7.2 (PHP 7.0.15 — cli) by Justin Hileman
 >>> $a = Sms::driver()->prepare('18512345678', $paramString, 'SMS_1234')->send();
 >>> $a = Sms::driver('aliyunsms')->prepare('18512345678', $paramString, 'SMS_1234')->send();
 
+
+支持营销短信变量为空
+>>> $a = Sms::driver()->prepareV20170606('18512345678', [], 'SMS_1234')->sendV20170606();
+
 ```
 
 **Note**: superman2014/sms还不是很完善
