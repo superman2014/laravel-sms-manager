@@ -16,8 +16,9 @@ class AliyunSmsProvider extends AbstractProvider implements ProviderContract
 
     public static $acsClient = null;
 
-	public function __construct()
+	public function __construct($config)
 	{
+        parent::__construct($config);
 		Config::load();
 	}
 
@@ -169,7 +170,7 @@ class AliyunSmsProvider extends AbstractProvider implements ProviderContract
 
         return static::sendSms(
             $this->mobile,
-            json_encode($this->paramString),
+            $this->paramString,
             $this->config['client_id'],
             $this->config['client_secret'],
             $signName,
@@ -194,8 +195,7 @@ class AliyunSmsProvider extends AbstractProvider implements ProviderContract
             $this->config['client_id'],
             $this->config['client_secret'],
             $this->config['sign_name'],
-            $this->templateCode,
-            $this->config['end_point']
+            $this->templateCode
         );
     }
 
@@ -203,7 +203,7 @@ class AliyunSmsProvider extends AbstractProvider implements ProviderContract
      * 发送短信
      * @return stdClass
      */
-    public static function sendSms($mobile, array $templateParam, $clientId, $clientSecret, $signName, $templateCode, $endPoint) {
+    public static function sendSms($mobile, array $templateParam, $clientId, $clientSecret, $signName, $templateCode, $endPoint = 'cn-hangzhou') {
 
         // 初始化SendSmsRequest实例用于设置发送短信的参数
         $request = new SendSmsRequest();
